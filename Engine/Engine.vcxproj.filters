@@ -16,6 +16,9 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{8b6c92a8-f65d-451e-80e3-d65773602b92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="myfiles">
+      <UniqueIdentifier>{54212ba4-1034-42e1-b8b7-4ba5a130de6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChiliWin.h">
@@ -80,6 +83,15 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>myfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>myfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="EdgeWalker.h">
+      <Filter>myfiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
