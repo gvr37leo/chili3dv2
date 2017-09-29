@@ -40,17 +40,17 @@ struct Package : public IEdgeCodeGetter {
 	float get(EdgeWalkerCode code) {
 		switch (code) {
 		case x:
-		return vertex.x;
+			return vertex.x;
 		case y:
-		return vertex.y;
+			return vertex.y;
 		case z:
-		return vertex.z;
+			return vertex.z;
 		case uvx:
-		return uv.x;
+			return uv.x;
 		case uvy:
-		return uv.y;
+			return uv.y;
 		default:
-		return 0;
+			return 0;
 		}
 	}
 };

@@ -21,12 +21,17 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "Vector.h"
+#include "Mesh.h"
+#include "Camera.h"
+#include "TexturedShader.h"
 
-Game::Game( MainWindow& wnd )
-	:
-	wnd( wnd ),
-	gfx( wnd )
-{
+Surface sayan("Images\\sayan.bmp");
+TexturedShader* textureShader;
+StdVertexShader* stdVertexShader;
+Game::Game( MainWindow& wnd ):wnd( wnd ),gfx( wnd ){
+	textureShader = new TexturedShader(&sayan);
+	stdVertexShader = new StdVertexShader(gfx);
+
 }
 
 void Game::Go()
@@ -40,25 +45,21 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	
-	if( wnd.kbd.KeyIsPressed( VK_UP ) )
-	{
-	}
-	if( wnd.kbd.KeyIsPressed( VK_DOWN ) )
-	{
-	}
-	if( wnd.kbd.KeyIsPressed( VK_LEFT ) )
-	{
-	}
-	if( wnd.kbd.KeyIsPressed( VK_RIGHT ) )
-	{
-	}
 	ft.Mark();
 }
 
+int count = 0;
 void Game::ComposeFrame()
 {
-	V2i a(1,1);
-	V2i b(4, 4);
-	V2i c = a.lerp(b, 2);
+	Mesh mesh = Mesh::quad();
+	mesh.shader.fragmentShader = textureShader;
+	mesh.shader.vertexShader = stdVertexShader;
+	for (int i = 0; i < mesh.vertices.size(); i++) {
+		mesh.vertices[i].add(V3f(0, 0, 8));
+	}
 
+
+	Camera camera;
+	camera.draw(mesh, gfx);
+	OutputDebugString(L"frame\n");
 }

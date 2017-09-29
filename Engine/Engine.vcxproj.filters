@@ -93,6 +93,9 @@
     <ClInclude Include="EdgeWalker.h">
       <Filter>myfiles</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>myfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
