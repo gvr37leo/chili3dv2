@@ -27,12 +27,18 @@ struct StdVertexShader:public VertexShader {
 struct TexturedShader:public FragmentShader {
 
 	Surface* texture;
+	V3f light;
 
 	TexturedShader(Surface* texture) {
 		this->texture = texture;
+		light = V3f(0,0,1);//into the screen
 	}
 
 	Color operator() (int i, V2i& pos, EdgeWalker& walker, V3f& normal, Graphics& gfx) {
-		return Color(255, 0, 0);
+		int x = walker.get(EdgeWalkerCode::uvx) * texture->GetWidth();
+		int y = walker.get(EdgeWalkerCode::uvy) * texture->GetHeight();
+		float alignment = normal.dot(light);
+		float shade = std::max(-alignment, 0.0f);
+		return texture->GetPixel(x, y) * shade;
 	}
 };

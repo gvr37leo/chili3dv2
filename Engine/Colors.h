@@ -99,6 +99,13 @@ public:
 	{
 		dword = (dword & 0xFFFFFF00u) | b;
 	}
+
+	Color& operator*(float scalar){
+		SetR(GetR() * scalar);
+		SetG(GetG() * scalar);
+		SetB(GetB() * scalar);
+		return *this;
+	}
 };
 
 namespace Colors

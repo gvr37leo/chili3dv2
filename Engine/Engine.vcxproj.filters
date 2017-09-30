@@ -19,6 +19,9 @@
     <Filter Include="myfiles">
       <UniqueIdentifier>{54212ba4-1034-42e1-b8b7-4ba5a130de6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="myshaders">
+      <UniqueIdentifier>{45b7f8a1-b654-4593-bd71-f41393dae13a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChiliWin.h">
@@ -96,12 +99,18 @@
     <ClInclude Include="Mesh.h">
       <Filter>myfiles</Filter>
     </ClInclude>
+    <ClInclude Include="TexturedShader.h">
+      <Filter>myshaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ClownShader.h">
+      <Filter>myshaders</Filter>
+    </ClInclude>
+    <ClInclude Include="UvShader.h">
+      <Filter>myshaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics.cpp">
@@ -148,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>myfiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

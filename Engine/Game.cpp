@@ -24,14 +24,20 @@
 #include "Mesh.h"
 #include "Camera.h"
 #include "TexturedShader.h"
+#include "ClownShader.h"
+#include "UvShader.h"
+const float PI = 3.1415927;
 
 Surface sayan("Images\\sayan.bmp");
 TexturedShader* textureShader;
 StdVertexShader* stdVertexShader;
+ClownShader* clownShader;
+UvShader* uvShader;
 Game::Game( MainWindow& wnd ):wnd( wnd ),gfx( wnd ){
 	textureShader = new TexturedShader(&sayan);
 	stdVertexShader = new StdVertexShader(gfx);
-
+	clownShader = new ClownShader();
+	uvShader = new UvShader();
 }
 
 void Game::Go()
@@ -41,25 +47,27 @@ void Game::Go()
 	ComposeFrame();
 	gfx.EndFrame();
 }
-
+float mytime = 0;
 void Game::UpdateModel()
 {
+	mytime += ft.Mark();
 	
-	ft.Mark();
 }
 
-int count = 0;
-void Game::ComposeFrame()
-{
+void Game::ComposeFrame(){
 	Mesh mesh = Mesh::quad();
+	
+
 	mesh.shader.fragmentShader = textureShader;
 	mesh.shader.vertexShader = stdVertexShader;
 	for (int i = 0; i < mesh.vertices.size(); i++) {
-		mesh.vertices[i].add(V3f(0, 0, 8));
+		mesh.vertices[i].rotY(mytime);
+	}
+	for (int i = 0; i < mesh.vertices.size(); i++) {
+		mesh.vertices[i].add(V3f(0, 0, 4));
 	}
 
 
 	Camera camera;
 	camera.draw(mesh, gfx);
-	OutputDebugString(L"frame\n");
 }

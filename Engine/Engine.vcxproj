@@ -141,6 +141,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="ChiliException.h" />
     <ClInclude Include="ChiliWin.h" />
+    <ClInclude Include="ClownShader.h" />
     <ClInclude Include="Colors.h" />
     <ClInclude Include="COMInitializer.h" />
     <ClInclude Include="DXErr.h" />
@@ -158,6 +159,8 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="Surface.h" />
+    <ClInclude Include="TexturedShader.h" />
+    <ClInclude Include="UvShader.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vei2.h" />

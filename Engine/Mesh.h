@@ -29,19 +29,15 @@ struct Mesh {
 
 	static Mesh quad() {
 		Mesh quad;
-		quad.vertices = {
-			V3f(-1,1,0), 
-			V3f(1,1,0), 
-			V3f(1,-1,0),
-			V3f(-1,-1,0) 
-		};
+		quad.vertices.emplace_back(-1, 1, 0);
+		quad.vertices.emplace_back( 1, 1, 0);
+		quad.vertices.emplace_back( 1,-1, 0);
+		quad.vertices.emplace_back(-1,-1, 0);
 
-		quad.uvs = {
-			V2f(0,0),
-			V2f(1,0),
-			V2f(1,1),
-			V2f(0,1),
-		};
+		quad.uvs.emplace_back(0, 0);
+		quad.uvs.emplace_back(1, 0);
+		quad.uvs.emplace_back(1, 1);
+		quad.uvs.emplace_back(0, 1);
 		quad.faces = {
 			0,1,2,
 			2,3,0

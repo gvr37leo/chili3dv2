@@ -54,7 +54,7 @@ public:
 			V3f& v2 = wscoords[mesh.faces[i + 1]];
 			V3f& v3 = wscoords[mesh.faces[i + 2]];
 			V3f& normal = v2.c().sub(v1).cross(v3.c().sub(v1)).normalise();
-			if (normal.dot(v1.c().sub(V3f(0, 0, 0))) < 0) {
+			if (normal.dot(v1.c().sub(V3f(0, 0, 0))) < 0) {//backface culling
 				locationGiver.i = i;
 				locationGiver.normal = &normal;
 				triangle(mesh, mesh.faces[i], mesh.faces[i + 1], mesh.faces[i + 2], gfx, locationGiver);

@@ -23,7 +23,6 @@ struct Vector {
 	}
 
 	Vector(const Vector& other) :x(vals[0]), y(vals[1]), z(vals[2]) {
-		//OutputDebugString(L"vector copied\n");
 		memcpy(vals, other.vals, sizeof vals);
 	}
 
@@ -53,7 +52,7 @@ struct Vector {
 		return *this;
 	}
 
-	T dot(const Vector& other) {
+	T dot(const Vector& other)const {
 		T sum = 0;
 		for (int i = 0; i < size; i++) {
 			sum += vals[i] * other.vals[i];
@@ -91,6 +90,18 @@ struct Vector {
 
 	int& operator[](int index) {
 		return vals[index];
+	}
+
+	Vector& rotY(float t){
+		float cost = cosf(t);
+		float sint = sinf(t);
+		T xp = x * cost - z * sint;
+		T yp = y;
+		T zp = -x * sint + z * cost;
+		x = xp;
+		y = yp;
+		z = zp;
+		return *this;
 	}
 };
 
