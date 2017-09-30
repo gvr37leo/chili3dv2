@@ -44,4 +44,48 @@ struct Mesh {
 		};
 		return quad;
 	}
+
+	static Mesh cube() {
+		Mesh cube;
+		cube.vertices.emplace_back(-1, 1, -1);
+		cube.vertices.emplace_back(1, 1, -1);
+		cube.vertices.emplace_back(1, -1, -1);
+		cube.vertices.emplace_back(-1, -1, -1);
+
+		cube.vertices.emplace_back(-1, 1, 1);
+		cube.vertices.emplace_back(1, 1, 1);
+		cube.vertices.emplace_back(1, -1, 1);
+		cube.vertices.emplace_back(-1, -1, 1);
+
+		cube.uvs.emplace_back(0, 0);
+		cube.uvs.emplace_back(1, 0);
+		cube.uvs.emplace_back(1, 1);
+		cube.uvs.emplace_back(0, 1);
+
+		cube.uvs.emplace_back(0, 0);
+		cube.uvs.emplace_back(1, 0);
+		cube.uvs.emplace_back(1, 1);
+		cube.uvs.emplace_back(0, 1);
+
+		cube.faces = {
+			0,1,2,
+			0,2,3,
+
+			4,6,5,
+			4,7,6,
+
+			4,5,1,
+			4,1,0,
+
+			7,2,6,
+			7,3,2,
+
+			1,5,6,
+			1,6,2,
+
+			7,4,0,
+			7,0,3,
+		};
+		return cube;
+	}
 };

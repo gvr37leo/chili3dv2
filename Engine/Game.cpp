@@ -48,23 +48,50 @@ void Game::Go()
 	gfx.EndFrame();
 }
 float mytime = 0;
-void Game::UpdateModel()
-{
-	mytime += ft.Mark();
-	
+float xrot = 0;
+float yrot = 0;
+float rotspeed = 3;
+float transspeed = 1;
+V3f trans(0,0,4);
+
+void Game::UpdateModel(){
+	float dt = ft.Mark();;
+	mytime += dt;
+	if (wnd.kbd.KeyIsPressed('A')){
+		yrot += dt * rotspeed;
+	}
+	if (wnd.kbd.KeyIsPressed('D')){
+		yrot -= dt * rotspeed;
+	}
+	if (wnd.kbd.KeyIsPressed('W')){
+		xrot -= dt * rotspeed;
+	}
+	if (wnd.kbd.KeyIsPressed('S')){
+		xrot += dt * rotspeed;
+	}
+	if (wnd.kbd.KeyIsPressed('Q')) {
+		trans.x -= dt * transspeed;
+	}
+	if (wnd.kbd.KeyIsPressed('E')) {
+		trans.x += dt * transspeed;
+	}
 }
 
+
+//fix shading direction
+//shader flow
+//custom attributes interpolated
+
 void Game::ComposeFrame(){
-	Mesh mesh = Mesh::quad();
+	Mesh mesh = Mesh::cube();
 	
 
-	mesh.shader.fragmentShader = textureShader;
+	mesh.shader.fragmentShader = clownShader;
 	mesh.shader.vertexShader = stdVertexShader;
 	for (int i = 0; i < mesh.vertices.size(); i++) {
-		mesh.vertices[i].rotY(mytime);
-	}
-	for (int i = 0; i < mesh.vertices.size(); i++) {
-		mesh.vertices[i].add(V3f(0, 0, 4));
+		mesh.vertices[i].rotY(yrot);
+		mesh.vertices[i].rotX(xrot);
+		mesh.vertices[i].add(trans);
 	}
 
 

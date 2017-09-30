@@ -92,12 +92,36 @@ struct Vector {
 		return vals[index];
 	}
 
+	Vector& rotX(float t) {
+		float cost = cosf(t);
+		float sint = sinf(t);
+		T xp = x;
+		T yp = y * cost - z *sint;
+		T zp = y * sint + z * cost;
+		x = xp;
+		y = yp;
+		z = zp;
+		return *this;
+	}
+
 	Vector& rotY(float t){
 		float cost = cosf(t);
 		float sint = sinf(t);
-		T xp = x * cost - z * sint;
+		T xp = x * cost + z * sint;
 		T yp = y;
 		T zp = -x * sint + z * cost;
+		x = xp;
+		y = yp;
+		z = zp;
+		return *this;
+	}
+
+	Vector& rotZ(float t) {
+		float cost = cosf(t);
+		float sint = sinf(t);
+		T xp = x * cost - y * sint;
+		T yp = x * sint + y * cost;
+		T zp = z;
 		x = xp;
 		y = yp;
 		z = zp;

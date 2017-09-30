@@ -12,18 +12,22 @@ struct ClownShader :public FragmentShader {
 	std::vector<Color> colors;
 
 	ClownShader() {
-		colors.push_back(Color(255, 0, 0));
-		colors.push_back(Colors::Blue);
-		colors.push_back(Colors::Cyan);
-		colors.push_back(Colors::Gray);
-		colors.push_back(Colors::Green);
-		colors.push_back(Colors::Magenta);
-		colors.push_back(Colors::White);
-		colors.push_back(Colors::Yellow);
-		colors.push_back(Color(255, 255, 0));
-		colors.push_back(Color(255, 0, 255));
+		colors.push_back(Color(255, 155, 0));
+		colors.push_back(Color(0, 0, 255));
+		colors.push_back(Color(0, 255, 0));
 		colors.push_back(Color(0, 255, 255));
-		colors.push_back(Color(255, 0, 125));
+		colors.push_back(Color(255, 0, 0));
+		colors.push_back(Color(255, 0, 255));
+		colors.push_back(Color(255, 255, 0));
+		colors.push_back(Color(255, 255, 255));
+
+		colors.push_back(Color(155, 0, 255));
+		colors.push_back(Color(0, 155, 255));
+		colors.push_back(Color(0, 255, 155));
+		colors.push_back(Color(155, 255, 0));
+		colors.push_back(Color(255, 155, 0));
+		colors.push_back(Color(255, 0, 155));
+
 	}
 
 	Color operator() (int i, V2i& pos, EdgeWalker& walker, V3f& normal, Graphics& gfx) {
