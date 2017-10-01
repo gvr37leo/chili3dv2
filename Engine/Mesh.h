@@ -21,10 +21,46 @@ struct Mesh {
 	std::vector<V3f> vertices;
 	std::vector<V2f> uvs;
 	std::vector<int> faces;
+	std::vector<V3f> facenormals;
+	std::vector<V3f> vertexnormals;
 	Shader shader;
 
 	Package getPackage(int i) {
 		return Package(vertices[i], uvs[i]);
+	}
+	
+	void calcFaceNormals() {
+		for (int i = 0; i < faces.size(); i += 3) {
+			V3f& v1 = vertices[faces[i]];
+			V3f& v2 = vertices[faces[i + 1]];
+			V3f& v3 =vertices[faces[i + 2]];
+			V3f normal = v2.c().sub(v1).cross(v3.c().sub(v1)).normalise();
+			facenormals.push_back(normal);
+		}
+	}
+
+	void calcVertexNormals() {
+		//to what faces is each vertex connected
+		//vertexFaceOnwnership[i] corresponds to mesh.vertices
+		//vertexFaceOnwnership[i][x] says which begin index of faces are there
+		std::vector <std::vector<int>> vertexFaceOnwnership;
+		vertexFaceOnwnership.resize(vertices.size());
+
+		for (int i = 0; i < faces.size(); i += 3) {//at first index of face to al vertices that are part of it
+			vertexFaceOnwnership[faces[i]].push_back(i);
+			vertexFaceOnwnership[faces[i + 1]].push_back(i);
+			vertexFaceOnwnership[faces[i + 2]].push_back(i);
+		}
+
+		//average the normals of those faces
+		for (int i = 0; i < vertexFaceOnwnership.size(); i++) {//foreach vertex
+			//get normal of owned faces
+			V3f combined;
+			for(int j = 0; j < vertexFaceOnwnership[i].size(); j++){
+				combined.add(facenormals[vertexFaceOnwnership[i][j] / 3]);
+			}
+			vertexnormals.push_back(combined.normalise());
+		}
 	}
 
 	static Mesh quad() {
@@ -32,7 +68,7 @@ struct Mesh {
 		quad.vertices.emplace_back(-1, 1, 0);
 		quad.vertices.emplace_back( 1, 1, 0);
 		quad.vertices.emplace_back( 1,-1, 0);
-		quad.vertices.emplace_back(-1,-1, 0);
+		quad.vertices.emplace_back(0,0, -1.4);
 
 		quad.uvs.emplace_back(0, 0);
 		quad.uvs.emplace_back(1, 0);
@@ -40,7 +76,7 @@ struct Mesh {
 		quad.uvs.emplace_back(0, 1);
 		quad.faces = {
 			0,1,2,
-			2,3,0
+			0,2,3,
 		};
 		return quad;
 	}

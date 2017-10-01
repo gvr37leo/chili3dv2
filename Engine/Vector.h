@@ -88,7 +88,7 @@ struct Vector {
 		return *this;
 	}
 
-	int& operator[](int index) {
+	T& operator[](int index) {
 		return vals[index];
 	}
 
@@ -126,6 +126,23 @@ struct Vector {
 		y = yp;
 		z = zp;
 		return *this;
+	}
+
+	Vector<int,size> round(){
+		Vector<int, size> v;
+		for (int i = 0; i < size; i++) {
+			v[i] = std::round(vals[i]);
+		}
+		return v;
+	}
+
+	template<int newsize>
+	Vector<T,newsize> resize(){
+		Vector<T, newsize> v;
+		for(int i = 0; i < newsize;i++){
+			v[i] = vals[i];
+		}
+		return v;
 	}
 };
 

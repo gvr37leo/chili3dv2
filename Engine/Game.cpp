@@ -77,24 +77,32 @@ void Game::UpdateModel(){
 	}
 }
 
-
-//fix shading direction
 //shader flow
 //custom attributes interpolated
+//vertex normals
+//point light
 
 void Game::ComposeFrame(){
-	Mesh mesh = Mesh::cube();
+	Mesh mesh = Mesh::quad();
+	mesh.calcFaceNormals();
+	mesh.calcVertexNormals();
 	
 
-	mesh.shader.fragmentShader = clownShader;
+	mesh.shader.fragmentShader = textureShader;
 	mesh.shader.vertexShader = stdVertexShader;
 	for (int i = 0; i < mesh.vertices.size(); i++) {
 		mesh.vertices[i].rotY(yrot);
 		mesh.vertices[i].rotX(xrot);
 		mesh.vertices[i].add(trans);
+		
+		mesh.vertexnormals[i].rotY(yrot);
+		mesh.vertexnormals[i].rotX(xrot);
+		mesh.vertexnormals[i].add(trans);
 	}
 
 
 	Camera camera;
-	camera.draw(mesh, gfx);
+	//camera.draw(mesh, gfx);
+
+	camera.drawLine(V3f(-0.9,0,1), V3f(0.9,0,1),gfx,Colors::White);
 }

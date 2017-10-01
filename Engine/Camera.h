@@ -62,6 +62,36 @@ public:
 		}
 	}
 
+	void drawLine(V3f& a, V3f& b, Graphics& gfx, Color& color){
+		RectI screen = gfx.GetScreenRect();
+		stf(a,screen.GetWidth(), screen.GetHeight());
+		stf(b, screen.GetWidth(), screen.GetHeight());
+		
+		line(a.resize<2>(), b.resize<2>(), gfx, color);
+	}
+
+	void stf(V3f& v,int width, int height){
+		v.x /= v.z;
+		v.y /= v.z;
+
+		v.x = (v.x + 1) * (width / 2);
+		v.y = (-v.y + 1) * (height / 2);
+	}
+
+
+
+	void line(V2f& a, V2f& b,Graphics& gfx , Color& color){
+		V2i a_ = a.round();
+		V2i b_ = b.round();
+		int n = std::max(abs(a_.x - b_.x), abs(a_.y - b_.y));
+
+		for(int i = 0; i <= n; i++){
+			V2i pos = a.lerp(b, (float)i / n).round();
+			gfx.PutPixel(pos.x,pos.y,color);
+		}
+		
+	}
+
 	void triangle(Mesh& mesh, int a, int b, int c, Graphics& gfx, LocationGiver& locationGiver) {
 		Package vs[] = { mesh.getPackage(a),mesh.getPackage(b),mesh.getPackage(c) };
 		std::sort(vs, vs + 3, [](Package& a, Package& b) -> bool {return a.vertex.y < b.vertex.y; });
