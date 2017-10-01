@@ -83,12 +83,12 @@ void Game::UpdateModel(){
 //point light
 
 void Game::ComposeFrame(){
-	Mesh mesh = Mesh::quad();
+	Mesh mesh = Mesh::cube();
 	mesh.calcFaceNormals();
 	mesh.calcVertexNormals();
 	
 
-	mesh.shader.fragmentShader = textureShader;
+	mesh.shader.fragmentShader = clownShader;
 	mesh.shader.vertexShader = stdVertexShader;
 	for (int i = 0; i < mesh.vertices.size(); i++) {
 		mesh.vertices[i].rotY(yrot);
@@ -97,12 +97,17 @@ void Game::ComposeFrame(){
 		
 		mesh.vertexnormals[i].rotY(yrot);
 		mesh.vertexnormals[i].rotX(xrot);
-		mesh.vertexnormals[i].add(trans);
+	}
+
+	for(int i = 0;i < mesh.faces.size() / 3;i++){
+		mesh.facenormals[i].rotY(yrot);
+		mesh.facenormals[i].rotX(xrot);
 	}
 
 
 	Camera camera;
-	//camera.draw(mesh, gfx);
+	camera.draw(mesh, gfx);
 
-	camera.drawLine(V3f(-0.9,0,1), V3f(0.9,0,1),gfx,Colors::White);
+	//camera.drawLine(V3f(-0.9,1,5), V3f(0.9,0,1),gfx,Colors::White);
+	//camera.line(V2f(0,0),V2f(0,0),gfx,Colors::White);
 }

@@ -68,7 +68,7 @@ struct Mesh {
 		quad.vertices.emplace_back(-1, 1, 0);
 		quad.vertices.emplace_back( 1, 1, 0);
 		quad.vertices.emplace_back( 1,-1, 0);
-		quad.vertices.emplace_back(0,0, -1.4);
+		quad.vertices.emplace_back(-1,-1, 0);
 
 		quad.uvs.emplace_back(0, 0);
 		quad.uvs.emplace_back(1, 0);
@@ -104,23 +104,23 @@ struct Mesh {
 		cube.uvs.emplace_back(0, 1);
 
 		cube.faces = {
-			0,1,2,
-			0,2,3,
+			0,1,3,
+			1,2,3,
 
-			4,6,5,
+			1,6,2,
+			1,5,6,
+
+			5,4,6,
 			4,7,6,
 
+			4,0,3,
+			4,3,7,
+
+			0,4,1,
 			4,5,1,
-			4,1,0,
 
-			7,2,6,
-			7,3,2,
-
-			1,5,6,
-			1,6,2,
-
-			7,4,0,
-			7,0,3,
+			3,6,7,
+			3,2,6,
 		};
 		return cube;
 	}

@@ -43,8 +43,30 @@ public:
 
 	void draw(Mesh& mesh, Graphics& gfx) {
 		std::vector<V3f> wscoords = mesh.vertices;
+		std::vector<V3f> wsVertexNormalsEnds;
+		std::vector<V3f> faceCenter;
+		std::vector<V3f> faceCenterEnd;
+
+		for(int i = 0; i < mesh.faces.size(); i += 3){
+			V3f& v1 = wscoords[mesh.faces[i]];
+			V3f& v2 = wscoords[mesh.faces[i + 1]];
+			V3f& v3 = wscoords[mesh.faces[i + 2]];
+			faceCenter.push_back(v1.c().add(v2).add(v3).scale(1 / 3.0f));
+			faceCenterEnd.push_back(faceCenter[i / 3].c().add(mesh.facenormals[i / 3]));
+		}
+
+		for (int i = 0; i < wscoords.size(); i++) {
+			V3f& end = wscoords[i].c().add(mesh.vertexnormals[i]);
+			wsVertexNormalsEnds.push_back(end);
+		}
+
 		for (int i = 0; i < mesh.vertices.size(); i++) {
 			mesh.shader.vertexShader->operator()(mesh.vertices[i]);
+			mesh.shader.vertexShader->operator()(wsVertexNormalsEnds[i]);
+		}
+		for(int i = 0; i < faceCenter.size(); i++){
+			mesh.shader.vertexShader->operator()(faceCenter[i]);
+			mesh.shader.vertexShader->operator()(faceCenterEnd[i]);
 		}
 			
 		LocationGiver locationGiver(mesh, gfx);
@@ -60,6 +82,15 @@ public:
 				triangle(mesh, mesh.faces[i], mesh.faces[i + 1], mesh.faces[i + 2], gfx, locationGiver);
 			}
 		}
+
+		for (int i = 0; i < mesh.vertices.size(); i++) {
+			line(mesh.vertices[i].resize<2>(), wsVertexNormalsEnds[i].resize<2>(), gfx, Color(255, 150, 0));
+		}
+		for (int i = 0; i < faceCenter.size(); i++){
+			line(faceCenter[i].resize<2>(), faceCenterEnd[i].resize<2>(), gfx, Color(85,26,139));
+		}
+
+		
 	}
 
 	void drawLine(V3f& a, V3f& b, Graphics& gfx, Color& color){
@@ -84,10 +115,13 @@ public:
 		V2i a_ = a.round();
 		V2i b_ = b.round();
 		int n = std::max(abs(a_.x - b_.x), abs(a_.y - b_.y));
+		V2f step = a.c().lerp(b, 1 / (float)n).sub(a);
+		V2f pos = a;
 
-		for(int i = 0; i <= n; i++){
-			V2i pos = a.lerp(b, (float)i / n).round();
-			gfx.PutPixel(pos.x,pos.y,color);
+		gfx.PutPixel(round(pos.x), round(pos.y), color);
+		for(int i = 1; i <= n; i++){
+			pos.add(step);
+			gfx.PutPixel(round(pos.x),round(pos.y),color);
 		}
 		
 	}
