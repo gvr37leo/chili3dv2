@@ -108,6 +108,9 @@
     <ClInclude Include="UvShader.h">
       <Filter>myshaders</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>myfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXErr.cpp">
